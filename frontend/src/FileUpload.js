@@ -2,17 +2,26 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function FileUpload() {
-  const [fileInput, setFileInput] = useState(null);
+  const [fileInput1, setFileInput1] = useState(null);
+  const [fileInput2, setFileInput2] = useState(null);
   const [filenames, setFilenames] = useState([]);
 
-  const handleFileChange = (event) => {
-    setFileInput(event.target.files);
+  const handleFileChange1 = (event) => {
+    setFileInput1(event.target.files);
+  };
+  
+  const handleFileChange2 = (event) => {
+    setFileInput2(event.target.files);
   };
 
   const handleUpload = async () => {
     const formData = new FormData();
-    for (let i = 0; i < fileInput.length; i++) {
-      formData.append("files", fileInput[i]);
+    for (let i = 0; i < fileInput1.length; i++) {
+      formData.append("files1", fileInput1[i]);
+    }
+    
+    for (let i = 0; i < fileInput2.length; i++) {
+      formData.append("files2", fileInput2[i]);
     }
 
     try {
@@ -25,7 +34,8 @@ function FileUpload() {
 
   return (
     <div>
-      <input type="file" multiple onChange={handleFileChange} />
+      <input type="file" multiple onChange={handleFileChange1} />
+      <input type="file" multiple onChange={handleFileChange2} />
       <button onClick={handleUpload}>Upload</button>
       <ul>
         {filenames.map((filename, index) => (
@@ -37,3 +47,4 @@ function FileUpload() {
 }
 
 export default FileUpload;
+

@@ -7,9 +7,13 @@ api = Api(app)
 
 class FileUpload(Resource):
     def post(self):
-        files = request.files.getlist("files")
+        files1 = request.files.getlist("files1")
+        files2 = request.files.getlist("files2")
         filenames = []
-        for file in files:
+        for file in files1:
+            file.save(os.path.join("/home/coga/Desktop/pass/backend/uploads", file.filename))
+            filenames.append(file.filename)
+        for file in files2:
             file.save(os.path.join("/home/coga/Desktop/pass/backend/uploads", file.filename))
             filenames.append(file.filename)
         return {"message": "Files uploaded successfully", "filenames": filenames}
