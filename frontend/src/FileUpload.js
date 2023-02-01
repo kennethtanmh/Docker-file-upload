@@ -1,47 +1,39 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-const FileUpload = () => {
-  const [files, setFiles] = useState([]);
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(null);
+function FileUpload() {
+  const [fileInput, setFileInput] = useState(null);
+  const [filenames, setFilenames] = useState([]);
 
-  const handleFileChange = (e) => {
-    setFiles(e.target.files);
+  const handleFileChange = (event) => {
+    setFileInput(event.target.files);
   };
 
   const handleUpload = async () => {
-    setUploading(true);
-    setError(null);
     const formData = new FormData();
-    for (const file of files) {
-      formData.append('files', file);
+    for (let i = 0; i < fileInput.length; i++) {
+      formData.append("files", fileInput[i]);
     }
 
     try {
-      await axios.post('http://localhost:5000/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-    } catch (err) {
-      setError(err.message);
-      console.error(err);
-    } finally {
-      setUploading(false);
-      setFiles([]);
+      const response = await axios.post('http://localhost:5000/api/upload', formData);
+      setFilenames([...filenames, ...response.data.filenames]);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
     <div>
       <input type="file" multiple onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={uploading || !files.length}>
-        {uploading ? 'Uploading...' : 'Upload'}
-      </button>
-      {error && <div>{error}</div>}
+      <button onClick={handleUpload}>Upload</button>
+      <ul>
+        {filenames.map((filename, index) => (
+          <li key={index}>{filename}</li>
+        ))}
+      </ul>
     </div>
   );
-};
+}
 
 export default FileUpload;
