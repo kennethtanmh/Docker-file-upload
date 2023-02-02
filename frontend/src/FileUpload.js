@@ -26,11 +26,15 @@ function FileUpload() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/upload', formData);
-      setFilenames([...filenames, ...response.data.filenames]);
-      const checksum1 = response.data.checksum1;
-      const checksum2 = response.data.checksum2;
+      const response = await axios.post('http://localhost:5000/api/upload', formData); 
+      const responseData = response.data
+
+
+      setFilenames([responseData.file1_name, responseData.file2_name]);
+      const checksum1 = response.data.file1_hash;
+      const checksum2 = response.data.file2_hash;
       setIsIdentical(checksum1 === checksum2);
+      console.log(isIdentical)
     } catch (error) {
       console.error(error);
     }
@@ -53,4 +57,10 @@ function FileUpload() {
 }
 
 export default FileUpload;
+
+
+
+
+
+
 

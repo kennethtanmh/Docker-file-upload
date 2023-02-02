@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 import os
 import hashlib
@@ -38,11 +38,15 @@ class FileUpload(Resource):
             print('The files are identical.')
         else:
             print('The files are different.')
-
-        return 
+            
+        
+        response = {'file1_name': file1, 'file2_name': file2, 'file1_hash':f1_hash, 'file2_hash':f2_hash}
+        return jsonify(response)
 
 api.add_resource(FileUpload, '/api/upload')
 
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+
