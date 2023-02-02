@@ -5,6 +5,7 @@ function FileUpload() {
   const [fileInput1, setFileInput1] = useState(null);
   const [fileInput2, setFileInput2] = useState(null);
   const [filenames, setFilenames] = useState([]);
+  const [isIdentical, setIsIdentical] = useState(null);
 
   const handleFileChange1 = (event) => {
     setFileInput1(event.target.files);
@@ -27,6 +28,9 @@ function FileUpload() {
     try {
       const response = await axios.post('http://localhost:5000/api/upload', formData);
       setFilenames([...filenames, ...response.data.filenames]);
+      const checksum1 = response.data.checksum1;
+      const checksum2 = response.data.checksum2;
+      setIsIdentical(checksum1 === checksum2);
     } catch (error) {
       console.error(error);
     }
@@ -42,6 +46,8 @@ function FileUpload() {
           <li key={index}>{filename}</li>
         ))}
       </ul>
+      {isIdentical === true && <div>The files are identical.</div>}
+      {isIdentical === false && <div>The files are different.</div>}
     </div>
   );
 }
