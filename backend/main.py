@@ -20,14 +20,12 @@ class FileUpload(Resource):
         file1 = files1[0].filename
         file2 = files2[0].filename
         
-        resultI = subprocess.run(["cksum", "/home/coga/Desktop/pass/backend/uploads/" + file1], capture_output=True)
-        resultII = subprocess.run(["cksum", "/home/coga/Desktop/pass/backend/uploads/" + file2], capture_output=True)
+        result1 = subprocess.run(["cksum", "/home/coga/Desktop/pass/backend/uploads/" + file1], capture_output=True).stdout.decode().split()[0]
+        result2 = subprocess.run(["cksum", "/home/coga/Desktop/pass/backend/uploads/" + file2], capture_output=True).stdout.decode().split()[0]
         
-        result1 = resultI.stdout.decode().split()[0]
-        result2 = resultII.stdout.decode().split()[0]
-
         print(result1)
         print(result2)
+        
         
         if result1 == result2:
             print('The files are identical.')
