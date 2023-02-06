@@ -22,19 +22,9 @@ class FileUpload(Resource):
         
         result1 = subprocess.run(["cksum", "/home/coga/Desktop/pass/backend/uploads/" + file1], capture_output=True).stdout.decode().split()[0]
         result2 = subprocess.run(["cksum", "/home/coga/Desktop/pass/backend/uploads/" + file2], capture_output=True).stdout.decode().split()[0]
-        
-        print(result1)
-        print(result2)
-        
-        
-        if result1 == result2:
-            print('The files are identical.')
-        else:
-            print('The files are different.')
-
+         
         response = {'file1_name': file1, 'file2_name': file2, 'file1_result': result1, 'file2_result': result2}
         return jsonify(response)
-
 
 api.add_resource(FileUpload, '/api/upload')
 

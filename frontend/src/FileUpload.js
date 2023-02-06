@@ -29,7 +29,7 @@ function FileUpload() {
     try {
       const response = await axios.post('http://localhost:5000/api/upload', formData); 
       const responseData = response.data
-
+      console.log(response);
 
       setFilenames([responseData.file1_name, responseData.file2_name]);
       const checksum1 = response.data.file1_result;
