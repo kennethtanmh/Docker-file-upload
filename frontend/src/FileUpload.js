@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Button} from 'antd';
+import 'antd/dist/reset.css';
+
 
 function FileUpload() {
   const [fileInput1, setFileInput1] = useState(null);
@@ -46,7 +49,7 @@ function FileUpload() {
     <div>
       <input type="file" multiple onChange={handleFileChange1} />
       <input type="file" multiple onChange={handleFileChange2} />
-      <button onClick={handleUpload}>Upload</button>
+      <Button type="primary" onClick={handleUpload}>Upload</Button>
       <ul>
         {filenames.map((filename, index) => (
           <li key={index}>{filename}</li>
