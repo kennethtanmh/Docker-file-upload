@@ -1,0 +1,14 @@
+1) go through master (zeroNQ) 1)Publisher-subscriber 2) Master Slave
+2) go striaight to module using  2 checksums (need to figure out)
+
+Each container must have a publisher and subscriber ports 
+Make use of Docker Compose
+
+
+client (front end) Server (backend)
+Docker Compose file (inside will have react and webserver dockerfiles, like a subset)
+YOu cant run check sum in python need to use bash script 
+
+https://missing.csail.mit.edu/2020/version-control/
+
+

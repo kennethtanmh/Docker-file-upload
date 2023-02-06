@@ -5,6 +5,7 @@ function FileUpload() {
   const [fileInput1, setFileInput1] = useState(null);
   const [fileInput2, setFileInput2] = useState(null);
   const [filenames, setFilenames] = useState([]);
+  const [isIdentical, setIsIdentical] = useState(null);
 
 
   const handleFileChange1 = (event) => {
@@ -31,6 +32,11 @@ function FileUpload() {
 
 
       setFilenames([responseData.file1_name, responseData.file2_name]);
+      const checksum1 = response.data.file1_result;
+      const checksum2 = response.data.file2_result;
+      setIsIdentical(checksum1 === checksum2);
+      console.log(isIdentical)
+
     } catch (error) {
       console.error(error);
     }
@@ -46,6 +52,8 @@ function FileUpload() {
           <li key={index}>{filename}</li>
         ))}
       </ul>
+      {isIdentical === true && <div>The files are identical.</div>}
+      {isIdentical === false && <div>The files are different.</div>}
     </div>
   );
 }
