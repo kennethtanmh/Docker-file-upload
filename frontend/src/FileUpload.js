@@ -28,9 +28,9 @@ function FileUpload() {
     for (let i = 0; i < fileInput2.length; i++) {
       formData.append("files2", fileInput2[i]);
     }
-
+    // 'http://localhost:5000/api/upload'
     try {
-      const response = await axios.post('http://localhost:5000/api/upload', formData); 
+      const response = await axios.post('http://backend_c:5000/api/upload', formData);
       const responseData = response.data
       console.log(response);
 

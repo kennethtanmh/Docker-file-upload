@@ -27,9 +27,12 @@ services:
 
 volumes:
   mydata:
+    driver: local
 
 networks:
   mynetwork:
+    driver: bridge
+     
 
   
 
