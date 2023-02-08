@@ -1,11 +1,11 @@
 FROM python:3.10
 
-WORKDIR /backend
+WORKDIR /app
 
 COPY . .
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
-EXPOSE 4000
+EXPOSE 5000
 
-CMD python ./main.py
+CMD ["python", "app.py"]
