@@ -29,8 +29,9 @@ function FileUpload() {
       formData.append("files2", fileInput2[i]);
     }
     // 'http://localhost:5000/api/upload'
+    // http://host.docker.internal
     try {
-      const response = await axios.post('http://backend_c:5000/api/upload', formData);
+      const response = await axios.post('http://localhost:5000/api/upload', formData);
       const responseData = response.data
       console.log(response);
 

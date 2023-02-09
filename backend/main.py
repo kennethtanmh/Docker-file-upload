@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
+from werkzeug.utils import secure_filename
 import os
 import subprocess
 
 app = Flask(__name__)
 api = Api(app)
+
+# uploads_dir = "/home/coga/Desktop/pass/backend/uploads"
+uploads_dir = "/app/data"
 
 class FileUpload(Resource):
     def post(self):
@@ -12,18 +16,20 @@ class FileUpload(Resource):
         files2 = request.files.getlist("files2")
         filenames = []
         for file in files1:
-            file.save(os.path.join("/home/coga/Desktop/pass/backend/uploads", file.filename))
+            file1_name = secure_filename(file.filename)
+            file.save(os.path.join(uploads_dir, file1_name))
             filenames.append(file.filename)
         for file in files2:
-            file.save(os.path.join("/home/coga/Desktop/pass/backend/uploads", file.filename))   
+            file2_name = secure_filename(file.filename)
+            file.save(os.path.join(uploads_dir, file2_name))  
             filenames.append(file.filename)
-        file1 = files1[0].filename
-        file2 = files2[0].filename
+        # file1 = files1[0].filename
+        # file2 = files2[0].filename
         
-        result1 = subprocess.run(["cksum", "/home/coga/Desktop/pass/backend/uploads/" + file1], capture_output=True).stdout.decode().split()[0]
-        result2 = subprocess.run(["cksum", "/home/coga/Desktop/pass/backend/uploads/" + file2], capture_output=True).stdout.decode().split()[0]
+        result1 = subprocess.run(["cksum", os.path.join(uploads_dir, file1_name)], capture_output=True).stdout.decode().split()[0]
+        result2 = subprocess.run(["cksum", os.path.join(uploads_dir, file2_name)], capture_output=True).stdout.decode().split()[0]
          
-        response = {'file1_name': file1, 'file2_name': file2, 'file1_result': result1, 'file2_result': result2}
+        response = {'file1_name': file1_name, 'file2_name': file2_name, 'file1_result': result1, 'file2_result': result2}
         return jsonify(response)
 
 api.add_resource(FileUpload, '/api/upload')
